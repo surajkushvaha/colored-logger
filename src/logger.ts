@@ -1,4 +1,4 @@
-import * as moment from "moment";
+import moment from "moment";
 import * as fs from "fs";
 import * as path from "path";
 import { APP_CONSTANTS } from "./constants/app.constants";
