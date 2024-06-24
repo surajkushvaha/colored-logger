@@ -1,0 +1,32 @@
+{
+    "name": "colored-logger",
+    "version": "0.0.0",
+    "description": "This is to provide colored log to user",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/surajkushvaha/colored-logger.git"
+    },
+    "keywords": [
+        "colorful",
+        "logs"
+    ],
+    "author": "surajkushvaha",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/surajkushvaha/colored-logger/issues"
+    },
+    "homepage": "https://github.com/surajkushvaha/colored-logger#readme",
+    "devDependencies": {
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "moment": "^2.29.1",
+        "ts-node": "^10.9.2"
+    }
+}
