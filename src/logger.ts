@@ -48,14 +48,14 @@ export default class NodeLogger {
    * @type {MAPPED_LABEL}
    */
   private MAPPED_LABEL: MAPPED_LABEL = {
-    ERROR: Color.RED,
-    WARNING: Color.YELLOW,
-    INFO: Color.CYAN,
-    SUCCESS: Color.GREEN,
-    LOG: Color.WHITE,
-    NOTIFY: Color.BLUE,
-    ALERT: Color.YELLOWBG,
-    CRITICAL: Color.REDBG,
+    error: Color.RED,
+    warning: Color.YELLOW,
+    info: Color.CYAN,
+    success: Color.GREEN,
+    log: Color.WHITE,
+    notify: Color.BLUE,
+    alert: Color.YELLOWBG,
+    critical: Color.REDBG,
   };
 
   /**
@@ -98,7 +98,7 @@ export default class NodeLogger {
       }
       this.createLogStream(options);
     }
-    if (options.customLabels) {
+    if (options.customLabels && options.customLabels.length) {
       this.updateCustomLabels(options.customLabels);
       this.createMappedLoggerFunction();
     }
@@ -126,6 +126,7 @@ export default class NodeLogger {
    */
   private updateCustomLabels(customLabels: customLabels[]): void {
     customLabels.forEach((label) => {
+      if(!label.label || !label.color ) return;
       this.MAPPED_LABEL[label.label] = label.color;
     });
   }
@@ -138,7 +139,7 @@ export default class NodeLogger {
   private createMappedLoggerFunction(): Logger {
     Object.keys(this.MAPPED_LABEL).forEach((key) => {
       if (!this.logger) this.logger = {} as any;
-      this.logger[key.toLowerCase()] = (message: any) => this.log(key, message);
+      this.logger[key] = (message: any) => this.log(key, message);
     });
     return Object.assign(this.logger);
   }
@@ -170,9 +171,9 @@ export default class NodeLogger {
   private log(label: string, message: any): void {
     let formattedMessage = '';
     if (this.options.printTimestamp) formattedMessage += `[${moment().format()}] `;
-    if (this.options.printCallerFunctionName) formattedMessage += `[${label}] `;
+    if (this.options.printLabelName) formattedMessage += `[${label.toUpperCase()}] `;
     if (this.options.printCallerFunctionLocation) formattedMessage += `[Function ${this.getCallerName()}] `;
-    if (this.options.printTimestamp || this.options.printCallerFunctionLocation || this.options.printCallerFunctionName) formattedMessage += `: `;
+    if (this.options.printTimestamp || this.options.printCallerFunctionLocation || this.options.printLabelName) formattedMessage += `: `;
     console.log(
       this.MAPPED_LABEL[label],
       formattedMessage,
