@@ -1,2 +1,5 @@
 import NodeLogger from './logger';
-export { NodeLogger } ;
+import { Color } from './constants/colors';
+import { LoggerOptions, customLabels } from './interfaces/interface';
+const Logger = NodeLogger
+export { Logger, Color , LoggerOptions , customLabels } ;
