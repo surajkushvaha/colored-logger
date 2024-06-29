@@ -1,9 +1,11 @@
 "use strict";
-exports.__esModule = true;
+let filesToBeCopy = ['./README.md', './changelog.md', './LICENSE', './image.png','./package.json'];
+let foldersToBeCopied = ['./dist'];
+let locationWhereToBeCopied = ['../npm-published/'];
+
 var fs = require("fs");
 var path = require("path");
-var source = path.join(__dirname, 'dist');
-var destination = path.join(__dirname, '../npm-published/dist');
+
 // Function to copy files and directories recursively
 var copyRecursiveSync = function (src, dest) {
     if (fs.existsSync(dest)) {
@@ -17,12 +19,34 @@ var copyRecursiveSync = function (src, dest) {
         var destPath = path.join(dest, entry.name);
         if (entry.isDirectory()) {
             copyRecursiveSync(srcPath, destPath);
-        }
-        else {
+        } else {
             fs.copyFileSync(srcPath, destPath);
         }
     }
 };
-// Copy the dist folder
-copyRecursiveSync(source, destination);
-console.log("Copied ".concat(source, " to ").concat(destination));
+
+// Function to copy files
+var copyFileSync = function (src, dest) {
+    var destDir = path.dirname(dest);
+    if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir, { recursive: true });
+    }
+    fs.copyFileSync(src, dest);
+};
+
+// Copy the files and folders
+for (let location of locationWhereToBeCopied) {
+    for (let file of filesToBeCopy) {
+        let src = path.join(__dirname, file);
+        let dest = path.join(__dirname, location, path.basename(file));
+        copyFileSync(src, dest);
+        console.log(`Copied ${src} to ${dest}`);
+    }
+
+    for (let folder of foldersToBeCopied) {
+        let src = path.join(__dirname, folder);
+        let dest = path.join(__dirname, location, path.basename(folder));
+        copyRecursiveSync(src, dest);
+        console.log(`Copied ${src} to ${dest}`);
+    }
+}
