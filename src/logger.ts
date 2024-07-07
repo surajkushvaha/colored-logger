@@ -337,11 +337,10 @@ export default class NodeLogger {
     ) {
       return `${mappedLabelColor.ansiCode}`;
     } else if (typeof mappedLabelColor === "object") {
-      const rgbToAnsi = this.rgbToAnsi(mappedLabelColor);
       return `${
         mappedLabelColor.isBackground
-          ? "\x1b[48;5;" + rgbToAnsi + "m"
-          : "\x1b[38;5;" + rgbToAnsi + "m"
+          ? `\x1b[48;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B};m`
+          : `\x1b[38;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B};m`
       }`;
     } else {
       return `${Color[mappedLabelColor]}`;
