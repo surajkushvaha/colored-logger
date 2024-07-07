@@ -339,8 +339,8 @@ export default class NodeLogger {
     } else if (typeof mappedLabelColor === "object") {
       return `${
         mappedLabelColor.isBackground
-          ? `\x1b[48;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B};m`
-          : `\x1b[38;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B};m`
+          ? `\x1b[48;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B}m`
+          : `\x1b[38;2;${mappedLabelColor.R};${mappedLabelColor.G};${mappedLabelColor.B}m`
       }`;
     } else {
       return `${Color[mappedLabelColor]}`;
